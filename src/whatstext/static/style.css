@@ -1,0 +1,99 @@
+body {
+    background: #f3f4f6;
+    font-family: system-ui, sans-serif;
+}
+
+.chat-container {
+    max-width: 800px;
+    margin: 32px auto;
+    padding: 16px;
+}
+
+.month {
+    text-align: center;
+    margin: 24px 0 12px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.message {
+    margin-bottom: 14px;
+}
+
+.meta {
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.user {
+    font-weight: 600;
+}
+
+.time {
+    color: #6b7280;
+    margin-left: 6px;
+}
+
+.text {
+    background: #ffffff;
+    padding: 10px 12px;
+    border-radius: 6px;
+    max-width: 70%;
+    line-height: 1.4;
+}
+
+/* User colors */
+.user-a .user { color: #2563eb; }
+.user-b .user { color: #16a34a; }
+
+.user-a .text {
+    background: #eff6ff;
+}
+
+.user-b .text {
+    background: #ecfdf5;
+}
+
+
+/*
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+#chat-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.month-section {
+    margin-bottom: 30px;
+}
+
+.chat-message {
+    background-color: #f1f1f1;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+.timestamp {
+    font-size: 0.9em;
+    color: #888;
+}
+
+.username {
+    font-weight: bold;
+    color: #333;
+}
+
+.attachment {
+    margin-top: 10px;
+}
+
+.attachment a {
+    color: #007bff;
+    text-decoration: none;
+}
+*/
