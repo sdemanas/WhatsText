@@ -12,14 +12,27 @@ WhatsText makes WhatsApp chat exports more readable and interesting.
 - [Want to Contribute?](#Contribute)
 
 ## Why ?
-Whatsapp doesn't have a proper readable chat extract, unlike instagram.
-Which are much more readable and formatted to look like the originals.
-So I built this small python package to make those more readable and close to the original layout.
+Whatsapp export chats exports it to a text file with a media attachments in a folder **which is boring.**
 
-Demo :
+**WhatsText makes that interesting.**
+
+Sample Pictures :
+
+
+
+
+
+All you need to do is to install the python package and run it against your chat export.
 
 ## Installation
+
+```pip install WhatsText```
+
 ## Dependencies
+
+- Jinja
+- 
+
 ## Usage
 ## Configuration
 ## Output 
