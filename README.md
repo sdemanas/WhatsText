@@ -2,6 +2,7 @@
 WhatsText makes WhatsApp chat exports more readable and interesting.
 
 - [Why?](#Why?)
+    - [Demo](#demo)
 - [Installation](#Installation)
     - Method 1: pypi
     - Method 2: Install From Source
@@ -9,19 +10,39 @@ WhatsText makes WhatsApp chat exports more readable and interesting.
 - [Usage](#Usage)
 - [Configuration](#Configuration)
 - [Output Structure](#Output)
-- [ChangeLog](/Changelog.md)
+- [Change Log](/Changelog.md)
 - [Want to Contribute?](#Contribute)
 - [References](#FOSS)
 
 ## Why ?
-Whatsapp export chats exports it to a text file with a media attachments in a folder **which is boring.**
+
+When you export a whatsapp chat through the WhatsApp UI pon Android/iOS, the Whatsapp export button exports it to a text file with or without media attachments as a zip file.
+
+**WhatsText makes it interesting to read and view like regular chat**
+
+### Demo 
+
+All you need to do is to install the python package and run it against your chat export.
+
+1. A boring export :
+
+![Boring](assetsgithub/boring.png)
+
+2. After using WhatsText :
+
+![Processing](assetsgithub/processing.gif)
+
+3. Becomes interesting :
+
+![Interesting](assetsgithub/interesting.png)
 
 ### Features 
 
 **0.1.0**
 
 - [x] Parsing Chat Log for regular chats 
-- [x] Parsing Attachments
+- [ ] Speedy processing
+- [ ] Parsing Attachments
 
 0.1.2
 
@@ -33,13 +54,6 @@ Whatsapp export chats exports it to a text file with a media attachments in a fo
 - [ ] Light/Dark Mode
 
 **WhatsText makes that interesting.**
-
-### Demo 
-
-
-
-
-All you need to do is to install the python package and run it against your chat export.
 
 ## Installation
 
@@ -86,7 +100,3 @@ To submit a new feature request raise an issue, describe your requirements and c
 ## FOSS
 
 List of open source projects and references used for building WhatsText 
-
-https://jinja.palletsprojects.com/en/stable/
-
-https://github.com/Textualize/rich
