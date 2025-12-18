@@ -17,13 +17,13 @@ def export_chat_package(input_file_path, generated_html_filename="chat.html"):
     parent_dir = os.path.dirname(input_file_path)
     parent_dir_name = os.path.basename(parent_dir)
     
-    zip_name = f"WhatsText_{parent_dir_name}_Beautified.zip"
+    zip_name = f"{parent_dir_name} - Beautified By WhatsText.zip"
     zip_path = os.path.join(parent_dir, zip_name)
     
     generated_html_path = os.path.join(parent_dir, generated_html_filename)
     
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    static_dir_path = os.path.join(current_dir, "../static")
+    static_dir_path = os.path.join(current_dir, "../whatstext/assets/static")
     
     with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zf:
         zf.write(generated_html_path, os.path.basename(generated_html_path))

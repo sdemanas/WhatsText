@@ -5,8 +5,8 @@ import html
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-TEMPLATE_PATH = BASE_DIR / "templates" / "chat_view.html"
-STATIC_PATH = BASE_DIR / "static"
+TEMPLATE_PATH = BASE_DIR / "whatstext" / "assets" / "templates" / "chat_view.html"
+STATIC_PATH = BASE_DIR / "whatstext" / "assets" / "static"
 
 def generate_chat_html(grouped_messages, output_path):
     """

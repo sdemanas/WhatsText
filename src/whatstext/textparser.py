@@ -5,7 +5,7 @@ from typing import Dict, List
 
 def parse_chat_log(file_path):
     """
-    Parses a text file into structured message objects using regex.
+    Parse text file into structured message objects using regex.
 
     Args: 
         file_path (str): Path to the sanitized chat log.
@@ -57,7 +57,7 @@ def parse_chat_log(file_path):
 
 def group_messages_by_year_month(messages):
     """
-    Organizes a flat list of messages into a nested year/month hierarchy.
+    Organize flat list of messages into nested year/month hierarchy.
 
     Args: 
         messages (List[Dict]): List of message dictionaries.
