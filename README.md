@@ -71,7 +71,8 @@ Planned next:
 
 ## Installation
 
-1. Use Pip to install WhatsText on your machine 
+1. Use Pip to install WhatsText and dependencies on your machine 
+```pip install better_profanity```
 ```pip install WhatsText```
 
 Then run it with:
