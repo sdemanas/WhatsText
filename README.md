@@ -57,7 +57,8 @@ All you need to do is to install the python package and run it against your chat
 
 ## Installation
 
-1. Use Pip to install WhatsText on your machine 
+1. Use Pip to install WhatsText and dependencies on your machine 
+```pip install better_profanity```
 ```pip install WhatsText```
 
 2. Download the project onto your local machine and run 
