@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_PATH = BASE_DIR / "whatstext" / "assets" / "templates" / "chat_view.html"
 STATIC_PATH = BASE_DIR / "whatstext" / "assets" / "static"
 
-def generate_chat_html(grouped_messages, output_path):
+def generate_chat_html(grouped_messages, output_path, page_size, total_pages, total_messages, current_page):
     """
     Generates html file within the _chat.txt directory
     
@@ -55,7 +55,11 @@ def generate_chat_html(grouped_messages, output_path):
                     <div class="text">{text}</div>
                 </div>
                 """)
-
-    html_out = template.substitute(content="\n".join(body))
+    
+    prev_link = f'<a href="chat_page_{current_page-1}.html">← Previous</a>' if current_page > 1 else ''
+    next_link = f'<a href="chat_page_{current_page+1}.html">Next →</a>' if current_page < total_pages else ''
+    page_info = f"Page {current_page} of {total_pages} ({len([m for y in grouped_messages.values() for mo in y.values() for m in mo])}/{total_messages} messages)"
+    nav_links = f'<nav>{prev_link} {page_info} {next_link}</nav>'
+    html_out = template.substitute(content=''.join(body), pagination=nav_links)
 
     Path(output_path).write_text(html_out, encoding="utf-8")
