@@ -1,31 +1,35 @@
 import re
 import datetime
 from collections import defaultdict
-from typing import Dict, List
 
-def parse_chat_log(file_path):
+CHAT_LINE_RE = re.compile(r'\[(\d{2}/\d{2}/\d{2}), (\d{2}:\d{2}:\d{2})\] (.*?): (.*)')
+MEDIA_RE = re.compile(r'<attached:\s*(.*?)>')
+
+
+def parse_chat_log(file_path, attachments=None):
     """
     Parse text file into structured message objects using regex.
 
-    Args: 
+    Args:
         file_path (str): Path to the sanitized chat log.
+        attachments (dict[str, str] | None): filename -> extracted file path,
+            used to resolve "<attached: X>" references to real files on disk.
 
-    Returns: 
-        List[Dict]: List of dicts containing 'timestamp', 'username', and 'message'.
+    Returns:
+        List[Dict]: message dicts with 'timestamp', 'username', 'message',
+        'attachment_name' and 'attachment_path' (the latter two None when
+        the message has no attachment).
     """
+    attachments = attachments or {}
+
     with open(file_path, 'r', encoding='utf-8') as file:
         lines = file.readlines()
 
     messages = []
-    
-    log_pattern = r'\[(\d{2}/\d{2}/\d{2}), (\d{2}:\d{2}:\d{2})\] (.*?): (.*)'
-    # attachment_pattern = r'<attached:\s*(.*?)>'
-    # filename_ts_pattern = r'(\d{4})-(\d{2})-(\d{2})-(\d{2})-(\d{2})-(\d{2})'
-    
     current = None
 
     for raw_line in lines:
-        log_match = re.match(log_pattern, raw_line)
+        log_match = CHAT_LINE_RE.match(raw_line)
 
         if log_match:
             if current:
@@ -35,34 +39,43 @@ def parse_chat_log(file_path):
             timestamp = datetime.datetime.strptime(
                 f"{date_str} {time_str}", "%d/%m/%y %H:%M:%S"
             )
+            message = message.strip()
 
             current = {
                 "timestamp": timestamp,
                 "username": username,
-                "message": message.strip()
+                "message": message,
+                "attachment_name": None,
+                "attachment_path": None,
             }
+
+            media_match = MEDIA_RE.search(message)
+            if media_match:
+                name = media_match.group(1).strip()
+                current["attachment_name"] = name
+                current["attachment_path"] = attachments.get(name)
             continue
 
         if not current:
             continue
+
         # continuation of previous message (multiline)
         current["message"] += "\n" + raw_line.strip()
 
-    # flush last message
     if current:
         messages.append(current)
 
-    # To-Do : attachment handling 
     return messages
+
 
 def group_messages_by_year_month(messages):
     """
     Organize flat list of messages into nested year/month hierarchy.
 
-    Args: 
+    Args:
         messages (List[Dict]): List of message dictionaries.
 
-    Returns: 
+    Returns:
         Dict: Nested dictionary formatted as {year: {month: [messages]}}.
     """
     grouped = defaultdict(lambda: defaultdict(list))
