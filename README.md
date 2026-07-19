@@ -62,6 +62,11 @@ Also added along the way:
 - [x] Attachments rendered inline (photos, videos, audio, stickers, files)
 - [x] Single-click launcher (`WhatsText.command` / `WhatsText.bat`) — no terminal, no install
 
+Planned next:
+
+- [ ] Profanity filter
+- [ ] Clickable links (URLs in messages become clickable)
+
 **WhatsText makes that interesting.**
 
 ## Installation
