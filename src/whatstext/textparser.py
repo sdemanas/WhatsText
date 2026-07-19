@@ -2,8 +2,14 @@ import re
 import datetime
 from collections import defaultdict
 
-CHAT_LINE_RE = re.compile(r'\[(\d{2}/\d{2}/\d{2}), (\d{2}:\d{2}:\d{2})\] (.*?): (.*)')
+CHAT_LINE_RE = re.compile(r'\[(\d{2}/\d{2}/(?:\d{2}|\d{4})), (\d{2}:\d{2}:\d{2})\] (.*?): (.*)')
 MEDIA_RE = re.compile(r'<attached:\s*(.*?)>')
+
+
+def _parse_timestamp(date_str, time_str):
+    # WhatsApp exports a 2-digit year on some platforms/locales, 4-digit on others.
+    date_fmt = "%d/%m/%Y" if len(date_str.split("/")[-1]) == 4 else "%d/%m/%y"
+    return datetime.datetime.strptime(f"{date_str} {time_str}", f"{date_fmt} %H:%M:%S")
 
 
 def parse_chat_log(file_path, attachments=None):
@@ -36,9 +42,7 @@ def parse_chat_log(file_path, attachments=None):
                 messages.append(current)
 
             date_str, time_str, username, message = log_match.groups()
-            timestamp = datetime.datetime.strptime(
-                f"{date_str} {time_str}", "%d/%m/%y %H:%M:%S"
-            )
+            timestamp = _parse_timestamp(date_str, time_str)
             message = message.strip()
 
             current = {

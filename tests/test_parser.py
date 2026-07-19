@@ -26,6 +26,23 @@ def test_parse_chat_log_multiple_users(tmp_path):
     assert messages[1]["message"] == "Hi Alice! How are you?"
 
 
+def test_parse_chat_log_with_four_digit_year(tmp_path):
+    # Regression test: some WhatsApp exports use a 4-digit year (DD/MM/YYYY)
+    # instead of 2-digit (DD/MM/YY); the line regex used to require exactly
+    # 2 digits, silently dropping every message in these exports.
+    path = _write(
+        tmp_path,
+        "[19/05/2026, 09:03:40] Priya: Okay\n"
+        "[19/05/2026, 09:04:12] Arjun: <attached: 00000001-PHOTO-2026-05-21-18-02-11.jpg>\n",
+    )
+
+    messages = parse_chat_log(path, attachments={"00000001-PHOTO-2026-05-21-18-02-11.jpg": "/media/x.jpg"})
+
+    assert len(messages) == 2
+    assert messages[0]["timestamp"] == datetime.datetime(2026, 5, 19, 9, 3, 40)
+    assert messages[1]["attachment_path"] == "/media/x.jpg"
+
+
 def test_parse_empty_file(tmp_path):
     path = _write(tmp_path, "")
     assert parse_chat_log(path) == []
