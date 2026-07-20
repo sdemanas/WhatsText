@@ -2,12 +2,9 @@ import os
 import unicodedata
 import re
 
-from better_profanity import profanity
-
 def sanitize_text(text: str) -> str:
     """
     Normalizes Unicode, strips control characters, and trims trailing whitespace.
-    Redacts profanity from the text.
 
     Args: 
         text (str): The raw input string.
@@ -15,9 +12,6 @@ def sanitize_text(text: str) -> str:
     Returns: 
         str: NFKC-normalized text with unified line endings.
     """
-    # Initialize profanity cleaner
-    profanity.load_censor_words()
-
     text = unicodedata.normalize("NFKC", text)
     cleaned = []
     for ch in text:
@@ -29,7 +23,7 @@ def sanitize_text(text: str) -> str:
         if cat not in ("Cc", "Cf"):
             cleaned.append(ch)
 
-    text = profanity.censor("".join(cleaned), '*')
+    text = "".join(cleaned)
 
     # Normalize line endings
     text = text.replace("\r\n", "\n").replace("\r", "\n")
