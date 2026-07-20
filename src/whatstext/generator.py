@@ -75,13 +75,12 @@ def _strip_media_tag(text):
 
 
 def _render_text(text):
+    # Always render both variants, even when identical: the profanity toggle
+    # hides one and shows the other via CSS, so a message missing its
+    # "other" div would go blank when the filter state doesn't match it.
     original = html.escape(text).replace(chr(10), "<br>")
-    censored_text = profanity.censor(text, "*")
+    censored = html.escape(profanity.censor(text, "*")).replace(chr(10), "<br>")
 
-    if censored_text == text:
-        return f'<div class="text text-original">{original}</div>'
-
-    censored = html.escape(censored_text).replace(chr(10), "<br>")
     return (
         f'<div class="text text-original">{original}</div>'
         f'<div class="text text-censored">{censored}</div>'

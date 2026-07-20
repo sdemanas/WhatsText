@@ -3,12 +3,15 @@ from whatstext.textparser import group_messages_by_year_month
 import datetime
 
 
-def test_render_text_clean_message_has_only_original_div():
+def test_render_text_clean_message_still_has_both_divs():
+    # Regression test: the toggle CSS unconditionally hides .text-original
+    # when the filter is on and shows .text-censored - a clean message
+    # missing the .text-censored div would render blank in that state.
     html_out = _render_text("this is a clean message")
 
     assert 'class="text text-original"' in html_out
-    assert "text-censored" not in html_out
-    assert "clean message" in html_out
+    assert 'class="text text-censored"' in html_out
+    assert html_out.count("clean message") == 2
 
 
 def test_render_text_profane_message_has_both_divs():
@@ -45,7 +48,10 @@ def test_generated_page_includes_profanity_toggle_and_both_text_variants(tmp_pat
     assert "this is a **** test" in page_html
 
 
-def test_generated_page_clean_message_has_no_censored_variant(tmp_path):
+def test_generated_page_clean_message_still_visible_with_filter_on(tmp_path):
+    # A clean message must still render its text when the toggle is switched
+    # on client-side - it needs a .text-censored div to show, even though
+    # the content is identical to .text-original.
     messages = [_message("Alice", "hello there, all good")]
     grouped = group_messages_by_year_month(messages)
 
@@ -55,4 +61,5 @@ def test_generated_page_clean_message_has_no_censored_variant(tmp_path):
 
     page_html = (tmp_path / pages[0][2]).read_text(encoding="utf-8")
 
-    assert "text-censored" not in page_html
+    assert 'class="text text-censored"' in page_html
+    assert page_html.count("hello there, all good") == 2
