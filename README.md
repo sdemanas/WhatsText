@@ -43,7 +43,7 @@ All you need to do is to install the python package and run it against your chat
 **0.1.0**
 
 - [x] Parsing Chat Log for regular chats 
-- [ ] Speedy processing
+- [x] Speedy processing
 - [x] Parsing Attachments
 
 0.1.2
@@ -52,8 +52,8 @@ All you need to do is to install the python package and run it against your chat
 
 1.0
 
-- [ ] 3 Themes to choose from 
-- [x] Light/Dark Mode
+- [x] Themes to choose from 
+    - [x] Light/Dark Mode
 
 Also added along the way:
 
