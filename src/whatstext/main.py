@@ -1,79 +1,45 @@
-# Imports
-import time
+import atexit
+import shutil
+import signal
 import sys
-import os
+import tempfile
+import webbrowser
 
-# Submodules
-from sanitizer import sanitize_file
-from textparser import parse_chat_log, group_messages_by_year_month
-from generator import generate_chat_html
-from exporter import export_chat_package
+from .server import create_server
 
-def spinner_wait(message, seconds):
-    """
-    Displays a spinning animation for a set duration.
-    
-    Args: 
-        message (str): Task description, seconds (int): Duration.
-    Returns: 
-        None
-    """
-    chars = ["|", "/", "-", "\\"]
-    end_time = time.time() + seconds
-    i = 0
-    while time.time() < end_time:
-        sys.stdout.write(f"\r{chars[i % len(chars)]} {message}...")
-        sys.stdout.flush()
-        time.sleep(0.1)
-        i += 1
-    sys.stdout.write(f"\r[OK] {message} complete.    \n")
 
 def main():
-    if len(sys.argv) < 2:
-        print("[Error] No filepath provided. Usage: python main.py <file_path>")
-        return
+    root_tmp = tempfile.mkdtemp(prefix="whatstext_")
+    atexit.register(shutil.rmtree, root_tmp, ignore_errors=True)
 
-    filepath = sys.argv[1]
-    output_dir = os.path.dirname(os.path.abspath(filepath))
-    
-    print(f"\n--- ✨ WhatsText is Processing: {os.path.basename(filepath)} ✨ ---\n")
+    # atexit only runs on normal interpreter shutdown (Ctrl+C, return, uncaught
+    # exception) — SIGTERM/SIGHUP default to killing the process immediately,
+    # skipping atexit and leaving extracted media on disk. Route them through
+    # sys.exit() so the atexit cleanup above still runs.
+    def _terminate(signum, frame):
+        sys.exit(0)
 
-    # Loading animation time
-    animation_time = 1.0
+    signal.signal(signal.SIGTERM, _terminate)
+    if hasattr(signal, "SIGHUP"):
+        signal.signal(signal.SIGHUP, _terminate)
 
-    # Step 1: Sanitize
-    spinner_wait("Sanitizing chat logs", animation_time)
-    san_filepath = sanitize_file(filepath)
+    httpd = create_server(root_tmp)
+    port = httpd.server_address[1]
+    url = f"http://127.0.0.1:{port}/"
 
-    # Step 2: Parse
-    spinner_wait("Parsing message structures", animation_time)
-    messages = parse_chat_log(san_filepath)
-    print(f"[*] Indexed {len(messages)} messages.")
+    print(f"WhatsText is running at {url}")
+    print("Drag your WhatsApp export .zip onto the page that just opened.")
+    print("Press Ctrl+C to stop.")
 
-    # Step 3: Grouping
-    spinner_wait("Organizing by Year/Month", animation_time)
-    grouped = group_messages_by_year_month(messages)
+    webbrowser.open(url)
 
-    # Step 4: HTML Generation
-    spinner_wait("Generating HTML view", animation_time)
-    output_html = os.path.join(output_dir, "chat.html")
-    generate_chat_html(grouped, output_html)
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        httpd.server_close()
 
-    # Step 5: Exporting
-    spinner_wait("Packaging for export", animation_time)
-    zip_file = export_chat_package(filepath)
-    print(f"[*] Exported zip: {zip_file}")
-
-    # Step 6: Cleanup
-    spinner_wait("Cleaning intermediate files", animation_time)
-    if os.path.exists(output_html):
-        os.remove(output_html)
-    
-    # Clean up the specific sanitized file created in Step 1
-    if os.path.exists(san_filepath):
-        os.remove(san_filepath)
-
-    print("\n[SUCCESS] Beautified zip ready in directory. 🗂️ \n")
 
 if __name__ == "__main__":
     main()

@@ -3,26 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>WhatsText — $month_label</title>
+    <title>WhatsText — Which one is you?</title>
     <script>(function(){var t=localStorage.getItem("whatstext-theme");if(!t){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}document.documentElement.setAttribute("data-theme",t);})();</script>
-    <link rel="stylesheet" href="$static_prefix/style.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
-<body class="chat-page">
+<body class="drop-page">
     <header class="topbar">
         <span class="app-title">WhatsText</span>
-        <span class="month-label">$month_label</span>
         <button id="theme-toggle" type="button" aria-label="Toggle dark mode">🌙</button>
     </header>
 
-    <main class="chat-container">
-        $content
+    <main class="drop-screen">
+        <p class="dropzone-title">Which one is you?</p>
+        <p class="dropzone-hint">Your messages will show on the right, like in WhatsApp.</p>
+        <div class="sender-list">
+            $participants
+        </div>
     </main>
 
-    <nav class="page-nav">
-        <span class="page-nav-prev">$prev_link</span>
-        <span class="page-nav-next">$next_link</span>
-    </nav>
-
-    <script src="$static_prefix/script.js"></script>
+    <script src="/static/script.js"></script>
 </body>
 </html>

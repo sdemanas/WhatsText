@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WhatsText</title>
+    <script>(function(){var t=localStorage.getItem("whatstext-theme");if(!t){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}document.documentElement.setAttribute("data-theme",t);})();</script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="drop-page">
+    <header class="topbar">
+        <span class="app-title">WhatsText</span>
+        <button id="theme-toggle" type="button" aria-label="Toggle dark mode">🌙</button>
+    </header>
+
+    <main class="drop-screen">
+        <div id="dropzone" class="dropzone">
+            <div class="dropzone-icon">💬</div>
+            <p class="dropzone-title">Drag your WhatsApp export here</p>
+            <p class="dropzone-hint">or click to choose the .zip file</p>
+            <input id="file-input" type="file" accept=".zip" hidden>
+        </div>
+
+        <div id="progress-wrap" class="progress-wrap" hidden>
+            <div id="status-text" class="status-text">Uploading…</div>
+            <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+        </div>
+
+        <div id="error-text" class="error-text" hidden></div>
+
+        <p class="drop-help">
+            In WhatsApp: open a chat &rarr; ⋮ &rarr; More &rarr; Export chat &rarr; Include media.
+            Drop that .zip file above — nothing leaves your computer.
+        </p>
+    </main>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
