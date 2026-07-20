@@ -61,18 +61,17 @@ Also added along the way:
 - [x] WhatsApp-style chat bubbles, sent/received alignment
 - [x] Attachments rendered inline (photos, videos, audio, stickers, files)
 - [x] Single-click launcher (`WhatsText.command` / `WhatsText.bat`) — no terminal, no install
+- [x] Profanity filter — redacts profane words from message text
 
 Planned next:
 
-- [ ] Profanity filter
 - [ ] Clickable links (URLs in messages become clickable)
 
 **WhatsText makes that interesting.**
 
 ## Installation
 
-1. Use Pip to install WhatsText and dependencies on your machine 
-```pip install better_profanity```
+1. Use Pip to install WhatsText on your machine (pulls in dependencies, including the profanity filter, automatically)
 ```pip install WhatsText```
 
 Then run it with:
@@ -89,6 +88,7 @@ whatstext
 ## Dependencies
 
 - Standard python libraries 
+- [better_profanity](https://pypi.org/project/better-profanity/) — for the profanity filter (installed automatically with WhatsText)
 
 ## Usage
 
