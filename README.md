@@ -46,32 +46,32 @@ All you need to do is to install the python package and run it against your chat
 - [x] Speedy processing
 - [x] Parsing Attachments
 
-0.1.2
+**0.1.2**
 
 - [x] Parsing for Group Chats
 
-1.0
+**1.0**
 
 - [x] Themes to choose from 
     - [x] Light/Dark Mode
 
-Also added along the way:
+**1.1**
 
 - [x] Drag-and-drop local app — no command-line arguments needed
 - [x] WhatsApp-style chat bubbles, sent/received alignment
 - [x] Attachments rendered inline (photos, videos, audio, stickers, files)
 - [x] Single-click launcher (`WhatsText.command` / `WhatsText.bat`) — no terminal, no install
-- [x] Profanity filter — redacts profane words from message text
 
-Planned next:
+**1.2**
 
+- [x] Profanity filter
 - [ ] Clickable links (URLs in messages become clickable)
 
 **WhatsText makes that interesting.**
 
 ## Installation
 
-1. Use Pip to install WhatsText on your machine (pulls in dependencies, including the profanity filter, automatically)
+1. Use Pip to install WhatsText on your machine 
 ```pip install WhatsText```
 
 Then run it with:
@@ -88,7 +88,6 @@ whatstext
 ## Dependencies
 
 - Standard python libraries 
-- [better_profanity](https://pypi.org/project/better-profanity/) — for the profanity filter (installed automatically with WhatsText)
 
 ## Usage
 
