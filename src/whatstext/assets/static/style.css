@@ -52,7 +52,7 @@ body {
 .app-title { font-weight: 600; }
 .month-label { margin-left: auto; opacity: 0.85; }
 
-#theme-toggle {
+#theme-toggle, #profanity-toggle {
     margin-left: auto;
     background: none;
     border: none;
@@ -62,8 +62,10 @@ body {
     padding: 4px 8px;
     border-radius: 6px;
 }
-#theme-toggle:hover { background: rgba(255, 255, 255, 0.15); }
-.chat-page .month-label + #theme-toggle { margin-left: 0; }
+#theme-toggle:hover, #profanity-toggle:hover { background: rgba(255, 255, 255, 0.15); }
+#profanity-toggle[aria-pressed="true"] { background: rgba(255, 255, 255, 0.25); }
+.chat-page .month-label + #profanity-toggle,
+.chat-page #profanity-toggle + #theme-toggle { margin-left: 0; }
 
 /* Chat page */
 
@@ -114,6 +116,10 @@ body {
     white-space: pre-wrap;
     word-wrap: break-word;
 }
+
+.text-censored { display: none; }
+[data-profanity-filter="on"] .text-original { display: none; }
+[data-profanity-filter="on"] .text-censored { display: block; }
 
 .time {
     font-size: 11px;

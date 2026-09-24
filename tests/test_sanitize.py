@@ -19,6 +19,13 @@ def test_sanitize_text_preserves_newlines_and_tabs():
     assert sanitize_text("a\n\tb") == "a\n\tb"
 
 
+def test_sanitize_text_does_not_censor_profanity():
+    # Profanity filtering is applied per-message at render time (generator.py),
+    # toggleable in the UI - sanitize_text must leave message text untouched so
+    # the original is still available when the toggle is off.
+    assert sanitize_text("this is a damn test") == "this is a damn test"
+
+
 def test_sanitize_file_writes_sanitized_copy(tmp_path):
     src = tmp_path / "_chat.txt"
     src.write_text("Hello\x00World \n", encoding="utf-8")

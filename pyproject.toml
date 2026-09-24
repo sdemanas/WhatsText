@@ -17,6 +17,9 @@ classifiers = [
 ]
 license = "MIT"
 license-files = ["LICEN[CS]E*"]
+dependencies = [
+    "better_profanity",
+]
 
 [project.urls]
 Homepage = "https://github.com/sdemanas/WhatsText"

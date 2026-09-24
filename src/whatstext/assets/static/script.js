@@ -15,6 +15,27 @@
         });
     }
 
+    var PROFANITY_KEY = "whatstext-profanity-filter";
+
+    function currentProfanityFilter() {
+        return document.documentElement.getAttribute("data-profanity-filter") || "off";
+    }
+
+    function setProfanityFilter(v) {
+        document.documentElement.setAttribute("data-profanity-filter", v);
+        localStorage.setItem(PROFANITY_KEY, v);
+    }
+
+    var profanityToggle = document.getElementById("profanity-toggle");
+    if (profanityToggle) {
+        profanityToggle.setAttribute("aria-pressed", currentProfanityFilter() === "on" ? "true" : "false");
+        profanityToggle.addEventListener("click", function () {
+            var next = currentProfanityFilter() === "on" ? "off" : "on";
+            setProfanityFilter(next);
+            profanityToggle.setAttribute("aria-pressed", next === "on" ? "true" : "false");
+        });
+    }
+
     var dropzone = document.getElementById("dropzone");
     if (!dropzone) return;
 

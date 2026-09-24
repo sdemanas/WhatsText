@@ -6,10 +6,10 @@ def sanitize_text(text: str) -> str:
     """
     Normalizes Unicode, strips control characters, and trims trailing whitespace.
 
-    Args: 
+    Args:
         text (str): The raw input string.
-    
-    Returns: 
+
+    Returns:
         str: NFKC-normalized text with unified line endings.
     """
     text = unicodedata.normalize("NFKC", text)

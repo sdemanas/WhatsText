@@ -5,7 +5,11 @@ from pathlib import Path
 from string import Template
 from urllib.parse import quote
 
+from better_profanity import profanity
+
 from .textparser import MEDIA_RE
+
+profanity.load_censor_words()
 
 PACKAGE_DIR = Path(__file__).resolve().parent
 TEMPLATE_PATH = PACKAGE_DIR / "assets" / "templates" / "chat_view.html"
@@ -59,7 +63,7 @@ def _render_message(msg, me, media_base_url, show_sender_name):
     if msg["attachment_name"]:
         parts.append(_render_attachment(msg, media_base_url))
     if text:
-        parts.append(f'<div class="text">{html.escape(text).replace(chr(10), "<br>")}</div>')
+        parts.append(_render_text(text))
     parts.append(f'<div class="time">{time}</div>')
     parts.append("</div>")
 
@@ -68,6 +72,19 @@ def _render_message(msg, me, media_base_url, show_sender_name):
 
 def _strip_media_tag(text):
     return MEDIA_RE.sub("", text).strip()
+
+
+def _render_text(text):
+    # Always render both variants, even when identical: the profanity toggle
+    # hides one and shows the other via CSS, so a message missing its
+    # "other" div would go blank when the filter state doesn't match it.
+    original = html.escape(text).replace(chr(10), "<br>")
+    censored = html.escape(profanity.censor(text, "*")).replace(chr(10), "<br>")
+
+    return (
+        f'<div class="text text-original">{original}</div>'
+        f'<div class="text text-censored">{censored}</div>'
+    )
 
 
 def _render_day_messages(day, messages, me, media_base_url, show_sender_name):

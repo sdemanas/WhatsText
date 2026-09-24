@@ -46,25 +46,25 @@ All you need to do is to install the python package and run it against your chat
 - [x] Speedy processing
 - [x] Parsing Attachments
 
-0.1.2
+**0.1.2**
 
 - [x] Parsing for Group Chats
 
-1.0
+**1.0**
 
 - [x] Themes to choose from 
     - [x] Light/Dark Mode
 
-Also added along the way:
+**1.1**
 
 - [x] Drag-and-drop local app — no command-line arguments needed
 - [x] WhatsApp-style chat bubbles, sent/received alignment
 - [x] Attachments rendered inline (photos, videos, audio, stickers, files)
 - [x] Single-click launcher (`WhatsText.command` / `WhatsText.bat`) — no terminal, no install
 
-Planned next:
+**1.2**
 
-- [ ] Profanity filter
+- [x] Profanity filter
 - [ ] Clickable links (URLs in messages become clickable)
 
 **WhatsText makes that interesting.**
